@@ -2,14 +2,11 @@ FROM alpine:3.3
 
 ENTRYPOINT ["/bin/kubectl"]
 
-RUN set -x                  && \
-    apk --update upgrade    && \
-    apk add ca-certificates && \
-    rm -rf /var/cache/apk/*
+ENV KUBE_LATEST_VERSION="v1.5.4"
 
-ENV K8S_VERSION 1.5.4
-
-RUN set -x                                                                                                 && \
-    wget -O - https://github.com/kubernetes/kubernetes/releases/download/v${K8S_VERSION}/kubernetes.tar.gz  | \
-    tar zxOf - kubernetes/platforms/linux/amd64/kubectl > /bin/kubectl                                     && \
-    chmod +x /bin/kubectl
+ RUN apk add --update ca-certificates \
+ && apk add --update -t deps curl \
+ && curl -L https://storage.googleapis.com/kubernetes-release/release/${KUBE_LATEST_VERSION}/bin/linux/amd64/kubectl -o /bin/kubectl \
+ && chmod +x /bin/kubectl \
+ && apk del --purge deps \
+ && rm /var/cache/apk/*
