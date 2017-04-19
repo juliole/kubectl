@@ -11,4 +11,4 @@ ENV KUBE_LATEST_VERSION="v1.5.4"
  && apk del --purge deps \
  && rm /var/cache/apk/*
  
- CMD ["help"]
+ CMD ["get pods"]
