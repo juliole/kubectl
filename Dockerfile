@@ -1,6 +1,6 @@
 FROM alpine:3.3
 
-ENTRYPOINT ["/bin/kubectl"]
+ENTRYPOINT ["/bin/kubectl get pods"]
 
 ENV KUBE_LATEST_VERSION="v1.5.4"
 
@@ -11,4 +11,3 @@ ENV KUBE_LATEST_VERSION="v1.5.4"
  && apk del --purge deps \
  && rm /var/cache/apk/*
  
- CMD ["get pods"]
